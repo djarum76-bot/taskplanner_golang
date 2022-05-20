@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	"github.com/djarum76-bot/taskplanner_golang/db"
 	"github.com/djarum76-bot/taskplanner_golang/routes"
 )
@@ -10,5 +12,7 @@ func main() {
 
 	e := routes.Init()
 
-	e.Logger.Fatal(e.Start(":8080"))
+	port := os.Getenv("PORT")
+
+	e.Logger.Fatal(e.Start(":" + port))
 }
