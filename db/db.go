@@ -3,8 +3,7 @@ package db
 import (
 	"database/sql"
 	"fmt"
-
-	"github.com/djarum76-bot/taskplanner_golang/config"
+	"os"
 
 	_ "github.com/lib/pq"
 )
@@ -13,9 +12,14 @@ var db *sql.DB
 var err error
 
 func Init() {
-	conf := config.GetConfig()
+	// conf := config.GetConfig()
+	dbHost := os.Getenv("DB_HOST")
+	dbName := os.Getenv("DB_NAME")
+	dbPass := os.Getenv("DB_PASS")
+	dbPort := os.Getenv("DB_PORT")
+	dbUser := os.Getenv("DB_USER")
 
-	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+"password=%s dbname=%s sslmode=require", conf.DB_HOST, conf.DB_PORT, conf.DB_USER, conf.DB_PASS, conf.DB_NAME)
+	psqlInfo := fmt.Sprintf("host=%s port=%s user=%s "+"password=%s dbname=%s sslmode=require", dbHost, dbPort, dbUser, dbPass, dbName)
 
 	db, err = sql.Open("postgres", psqlInfo)
 	if err != nil {

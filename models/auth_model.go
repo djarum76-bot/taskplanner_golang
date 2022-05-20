@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/djarum76-bot/taskplanner_golang/config"
 	"github.com/djarum76-bot/taskplanner_golang/db"
 	"github.com/djarum76-bot/taskplanner_golang/helper"
 
@@ -18,7 +17,7 @@ func Register(username string, password string) (ResponseToken, bool, error) {
 	var res ResponseToken
 
 	con := db.CreateCon()
-	conf := config.GetConfig()
+	// conf := config.GetConfig()
 
 	sqlStatement := `INSERT INTO users (username, password, image, role) VALUES ($1, $2, $3, $4)`
 
@@ -46,7 +45,7 @@ func Register(username string, password string) (ResponseToken, bool, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	t, err := token.SignedString([]byte(conf.JWT_SECRET))
+	t, err := token.SignedString([]byte("secret"))
 	if err != nil {
 		return res, false, err
 	}
@@ -65,7 +64,7 @@ func Login(username string, password string) (ResponseToken, bool, error) {
 	var res ResponseToken
 
 	con := db.CreateCon()
-	conf := config.GetConfig()
+	// conf := config.GetConfig()
 
 	sqlStatement := "SELECT * FROM users WHERE username = ($1)"
 
@@ -94,7 +93,7 @@ func Login(username string, password string) (ResponseToken, bool, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
-	t, err := token.SignedString([]byte(conf.JWT_SECRET))
+	t, err := token.SignedString([]byte("secret"))
 	if err != nil {
 		return res, false, err
 	}

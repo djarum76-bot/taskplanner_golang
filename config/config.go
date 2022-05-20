@@ -1,7 +1,5 @@
 package config
 
-import "github.com/tkanos/gonfig"
-
 type Configuration struct {
 	DB_USER    string
 	DB_PASS    string
@@ -11,12 +9,12 @@ type Configuration struct {
 	JWT_SECRET string
 }
 
-func GetConfig() Configuration {
-	conf := Configuration{}
-	err := gonfig.GetConf("config/config.json", &conf)
-	if err != nil {
-		panic(err.Error())
-	}
+// func GetConfig() Configuration {
+// 	conf := Configuration{}
+// 	err := gonfig.GetConf("config/config.json", &conf)
+// 	if err != nil {
+// 		panic(err.Error())
+// 	}
 
-	return conf
-}
+// 	return conf
+// }

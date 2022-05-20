@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"github.com/djarum76-bot/taskplanner_golang/config"
 	"github.com/djarum76-bot/taskplanner_golang/controllers"
 	"github.com/djarum76-bot/taskplanner_golang/models"
 
@@ -11,7 +10,7 @@ import (
 
 func Init() *echo.Echo {
 	e := echo.New()
-	conf := config.GetConfig()
+	// conf := config.GetConfig()
 
 	e.GET("/coba", controllers.Coba)
 	e.POST("/register", controllers.Register)
@@ -21,7 +20,7 @@ func Init() *echo.Echo {
 	r := e.Group("/auth")
 	config := middleware.JWTConfig{
 		Claims:     &models.JwtCustomClaims{},
-		SigningKey: []byte(conf.JWT_SECRET),
+		SigningKey: []byte("secret"),
 	}
 	r.Use(middleware.JWTWithConfig(config))
 	r.GET("/user", controllers.GetUser)
