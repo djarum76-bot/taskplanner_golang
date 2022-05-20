@@ -11,7 +11,7 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
-func Register(username string, password string) (ResponseToken, bool, error) {
+func Register(username string, password string) (ResponseToken, bool, error, string) {
 	var user User
 	var err error
 	var res ResponseToken
@@ -23,12 +23,12 @@ func Register(username string, password string) (ResponseToken, bool, error) {
 
 	stmt, err := con.Prepare(sqlStatement)
 	if err != nil {
-		return res, false, err
+		return res, false, err, "1"
 	}
 
 	_, err = stmt.Exec(username, password, nil, nil)
 	if err != nil {
-		return res, false, err
+		return res, false, err, "2"
 	}
 
 	user.Username = username
@@ -47,7 +47,7 @@ func Register(username string, password string) (ResponseToken, bool, error) {
 
 	t, err := token.SignedString([]byte("secret"))
 	if err != nil {
-		return res, false, err
+		return res, false, err, "3"
 	}
 
 	res.Status = http.StatusOK
@@ -55,7 +55,7 @@ func Register(username string, password string) (ResponseToken, bool, error) {
 	res.Data = user
 	res.Token = t
 
-	return res, true, nil
+	return res, true, nil, "123213"
 }
 
 func Login(username string, password string) (ResponseToken, bool, error) {

@@ -23,10 +23,11 @@ func Register(c echo.Context) error {
 		})
 	}
 
-	res, status, err := models.Register(username, password)
+	res, status, err, pesan := models.Register(username, password)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{
 			"message": err.Error(),
+			"pesan":   pesan,
 		})
 	}
 
