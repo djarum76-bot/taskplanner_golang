@@ -19,6 +19,10 @@ func Register(username string, password string) (ResponseToken, bool, error, str
 	con := db.CreateCon()
 	// conf := config.GetConfig()
 
+	if _, err := con.Exec("CREATE TABLE users (id SERIAL NOT NULL PRIMARY KEY, username VARCHAR(255) NOT NULL UNIQUE, password VARCHAR(255) NOT NULL, image VARCHAR(255), role VARCHAR(255));"); err != nil {
+		return res, false, err, "0"
+	}
+
 	sqlStatement := `INSERT INTO users (username, password, image, role) VALUES ($1, $2, $3, $4)`
 
 	stmt, err := con.Prepare(sqlStatement)
